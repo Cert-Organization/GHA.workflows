@@ -34,11 +34,9 @@ jobs:
       with:
         path: ~/.npm
         key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-    - uses: actions/upload-artifact@v3
+    - uses: geekyeggo/delete-artifact@v2
       with:
         name: my-app
-        path: dist/
-        retention-days: 1
 
   deploy-job:
     needs: [ build ]
