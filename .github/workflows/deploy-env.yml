@@ -1,3 +1,5 @@
+name: environment test
+
 on:
   push:
     branches:
@@ -5,8 +7,6 @@ on:
   pull_request:
     branches:
       - ci/*
-
-name: environment test
 
 jobs:
   live-job:
