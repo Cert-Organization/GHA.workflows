@@ -1,4 +1,4 @@
-name: Environment Test Live - DEV
+name: Environment Live - DEV
 
 on:
   push:
