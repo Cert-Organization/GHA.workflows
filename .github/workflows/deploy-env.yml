@@ -1,4 +1,4 @@
-name: Environment Live - DEV
+name: Environment Live - DEV - Approval
 
 on:
   push:
