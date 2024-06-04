@@ -1,4 +1,4 @@
-name: Node.js CI - different engines
+run-name: Node.js CI - different engines
 
 on:
   workflow_dispatch:
