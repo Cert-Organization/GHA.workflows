@@ -1,11 +1,11 @@
-name: Node.js CI - different engines
+name: Node.js CI - Different Dngines
 
 on:
   workflow_dispatch:
   push:
 
 
-run-name: Custom Name by Run-Name
+run-name: Custom Name Run-Name
 
 jobs:
   build:
