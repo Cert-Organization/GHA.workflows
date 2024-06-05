@@ -5,7 +5,7 @@ on:
   push:
 
 
-run-name: Custom Name Run-Name
+run-name: Custom Name using Run-Name
 
 jobs:
   build:
