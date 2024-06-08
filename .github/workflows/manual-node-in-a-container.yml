@@ -11,3 +11,5 @@ jobs:
     steps:
       - name: Run a command
         run: node --version
+      - name: Run a command v2
+        run: ifconfig
