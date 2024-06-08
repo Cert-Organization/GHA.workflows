@@ -1,31 +1,33 @@
-name: Service Example
+name: NGINX Service Example
 
 on:
   workflow_dispatch:
 
 jobs:
-  my_job:
+  test_nginx:
+    name: Check NGINX Service
     runs-on: ubuntu-latest
     services:
-      my_service:
-        image: node:14
-        options: --health-cmd "node --version" --health-interval=10s --health-timeout=5s --health-retries=3
+      nginx:
+        image: nginx:latest
+        ports:
+          - 8080:80
+        options: >-
+          --health-cmd "curl -f http://localhost || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+      - name: Check out repository code
+        uses: actions/checkout@v3
 
-      - name: Wait for my_service to be healthy
+      - name: Wait for NGINX to be ready
         run: |
-          while ! docker inspect --format '{{.State.Health.Status}}' $(docker-compose ps -q my_service) | grep -q 'healthy'; do
-            echo "Waiting for my_service to be healthy..."
+          until curl -f http://localhost:8080; do
+            echo "Waiting for NGINX to be ready..."
             sleep 5
           done
 
-      - name: Interact with my_service
+      - name: Verify NGINX is running
         run: |
-          curl -s http://localhost:3000 # Replace with the actual port and endpoint if needed
-
-      - name: Run Node.js script
-        run: |
-          echo "Running Node.js script"
-          node your-script.js
+          curl -I http://localhost:8080
