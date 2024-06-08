@@ -12,4 +12,6 @@ jobs:
       - name: Run a command
         run: node --version
       - name: Run a command v2
-        run: ifconfig
+        run: ls -l
+      - name: Run a command v2
+        run: date
