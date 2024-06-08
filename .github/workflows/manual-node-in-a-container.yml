@@ -13,5 +13,5 @@ jobs:
         run: node --version
       - name: Run a command v2
         run: ls -l
-      - name: Run a command v2
+      - name: Run a command v3
         run: date
