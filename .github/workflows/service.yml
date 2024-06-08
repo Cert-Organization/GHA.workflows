@@ -8,7 +8,7 @@ jobs:
     name: Check NGINX Service
     runs-on: ubuntu-latest
     services:
-      nginx:
+      Web1:
         image: nginx:latest
         ports:
           - 8080:80
@@ -17,17 +17,37 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+      Web2:
+        image: nginx:latest
+        ports:
+            - 8081:80
+        options: >-
+            --health-cmd "curl -f http://localhost || exit 1"
+            --health-interval=10s
+            --health-timeout=5s
+            --health-retries=5       
     steps:
       #- name: Check out repository code
       #  uses: actions/checkout@v3
 
-      - name: Wait for NGINX to be ready
+      - name: Wait for Web1 to be ready
         run: |
           until curl -f http://localhost:8080; do
             echo "Waiting for NGINX to be ready..."
             sleep 5
           done
-
-      - name: Verify NGINX is running
+      - name: Wait for Web2 to be ready
         run: |
+          until curl -f http://localhost:8081; do
+            echo "Waiting for NGINX to be ready..."
+            sleep 5
+          done
+
+
+      - name: Verify Web1 and Web2 are running
+        run: |
+          echo "Web1"
+          curl -I http://localhost:8080
+          echo "--------------------------------------------------------"
+          echo "Web2"
           curl -I http://localhost:8080
