@@ -20,34 +20,32 @@ jobs:
       Web2:
         image: nginx:latest
         ports:
-            - 8081:80
+          - 8081:80
         options: >-
-            --health-cmd "curl -f http://localhost || exit 1"
-            --health-interval=10s
-            --health-timeout=5s
-            --health-retries=5       
+          --health-cmd "curl -f http://localhost || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5       
+    strategy:
+      matrix:
+        service:
+          - name: Web1
+            port: 8080
+          - name: Web2
+            port: 8081
+
     steps:
-      #- name: Check out repository code
-      #  uses: actions/checkout@v3
+      # - name: Check out repository code
+      #   uses: actions/checkout@v3
 
-      - name: Wait for Web1 to be ready
+      - name: Wait for ${{ matrix.service.name }} to be ready
         run: |
-          until curl -f http://localhost:8080; do
-            echo "Waiting for NGINX to be ready..."
-            sleep 5
-          done
-      - name: Wait for Web2 to be ready
-        run: |
-          until curl -f http://localhost:8081; do
-            echo "Waiting for NGINX to be ready..."
+          until curl -f http://localhost:${{ matrix.service.port }}; do
+            echo "Waiting for ${{ matrix.service.name }} to be ready..."
             sleep 5
           done
 
-
-      - name: Verify Web1 and Web2 are running
+      - name: Verify ${{ matrix.service.name }} is running
         run: |
-          echo "Web1"
-          curl -I http://localhost:8080
-          echo "--------------------------------------------------------"
-          echo "Web2"
-          curl -I http://localhost:8081
+          echo "${{ matrix.service.name }}"
+          curl -I http://localhost:${{ matrix.service.port }}
