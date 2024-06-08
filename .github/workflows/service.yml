@@ -1,0 +1,31 @@
+name: Service Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    services:
+      my_service:
+        image: node:14
+        options: --health-cmd "node --version" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Wait for my_service to be healthy
+        run: |
+          while ! docker inspect --format '{{.State.Health.Status}}' $(docker-compose ps -q my_service) | grep -q 'healthy'; do
+            echo "Waiting for my_service to be healthy..."
+            sleep 5
+          done
+
+      - name: Interact with my_service
+        run: |
+          curl -s http://localhost:3000 # Replace with the actual port and endpoint if needed
+
+      - name: Run Node.js script
+        run: |
+          echo "Running Node.js script"
+          node your-script.js
