@@ -50,4 +50,4 @@ jobs:
           curl -I http://localhost:8080
           echo "--------------------------------------------------------"
           echo "Web2"
-          curl -I http://localhost:8080
+          curl -I http://localhost:8081
