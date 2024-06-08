@@ -1,4 +1,19 @@
-name: NGINX Service Example
+name: Matrix - NGINX Service Example
+# here I am using 2 services and using matrix so I dont repeat the initial code which was
+
+        # - name: Wait for Web1 to be ready
+        # run: |
+        #   until curl -f http://localhost:8080; do
+        #     echo "Waiting for Web1 to be ready..."
+        #     sleep 5
+        #   done
+
+        # - name: Wait for Web2 to be ready
+        # run: |
+        #   until curl -f http://localhost:8081; do
+        #     echo "Waiting for Web2 to be ready..."
+        #     sleep 5
+        #   done
 
 on:
   workflow_dispatch:
